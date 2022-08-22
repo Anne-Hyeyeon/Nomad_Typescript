@@ -1,0 +1,75 @@
+[0. Introduction]
+
+Typescript란? 
+
+-JS를 기반으로 한 프로그래밍 언어.
+(JS랑 분명히 다르지만, 거의 똑같은!)
+TS는 JS복붙인데, 거기에다 새로운 기능만 살짝 추가한 것.
+
+-strongly-typed 언어 : 실행하기 전에 data type를 검사한다.
+
+-자바스크립트를 예시로 들어보자.
+const plus = (a,b) => a+b 라는 함수가 있을 때
+plus(2,2)는 4라는 결과값을 주지만, js는 a와 b가 어떤 타입이어야 하는지 전혀 모른다. 
+js는 그냥 a+b결과만 내보내줄 뿐이다.
+그렇다면 plus (2,"hi")를 해볼까? '2hi'가 나와버린다.
+
+js에게 a,b가 언제나 number라는 사실을 말해주고 싶다.
+만약 a,b가 number 타입이 아닐 경우, 나한테 알려주게 하려면?
+
+코드를 publish하기 전에 js가 도와줄 수 있는 방법이 있을까? 없다. js는 도와주지 않을 것이다. stongly-typed된 언어가 아니기 때문이다.
+
+- 그렇다면 typescript는 뭐가 다를까? 프로그램이 작동하기 전에, '이 데이터타입은 뭐야?'라고 한번 체크해 준다.
+- Typescript는 뭐가 틀렸는지 말해준다구! js랑 똑같지만, '~~가 틀렸어'라고 말하는 것 빼고는 다 똑같다.
+
+- TS 세계에서는, const plus = (a,b) => a + b;에서 a와 b가 어떤 데이터타입을 가지는지 모른다며 잔소리를 막 해댄다. js는 마이웨이임. 안알랴줌
+
+const plus = (a:number, b:number) => a + b;
+
+- but, 브라우저는 TS를 알아듣지 못한다. TS는 compile해서 보통의 JS로 만들어준다!!! ㅋㅋ 
+
+protection은 코드가 발행되기 '전'에 일어난다.
+
+[3.1 DefinitelyTyped]
+create react app 할 때 TS 구성하기 
+npx create-react-app my-app(내 앱 이름) --template typescript
+npx create-react-app myts --template typescript
+
+기존 파일에 TS 쓰기
+1. 홈페이지에서 기존 프로젝트에 TS 적용하는 코드 복사 후 터미널에 복붙!
+npm i --save-dev typescript @types/node
+2. 확장명 바꾸기 : js->ts 
+3. react + typescript = .tsx
+
+TS 는 Styled Component가 무엇인지 모른다...! 알려줘야함.
+
+어떤 라이브러리나 패키지는 TS로 만들어진 게 아니라는 사실을 기억하자.
+만약 이런 라이브러리가 JS가 만들어졌다면, TS는 이게 뭔지 모르기 때문에 불만을 표시할 것이다.
+TS는 코드가 실행되기 전 에러를 알려줘야 하는데, 아무것도 모른다...?
+
+오류창에서 나오는 TS로 바꾸는 코드를 한번 해보자!
+
+*여기서 깨알같이...node.js는 자바스크립트를 브라우저뿐만 아니라, 컴퓨터 속에서 여러가지 용도로 확정 사용할 수 있게 해 준다.
+
+
+속편하게 하는 법
+npx create-react-app 내 앱 이름 --template typescript
+npm i --save-dev @types/styled-components
+npm i styled-components
+하세요~!!
+App, index 내용은 복사하면 되니!!
+
+혹시 root 때문에 에러나시는 분
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+이거로 변경해보세요
+
+
+마법의 @types 는 무엇일까?
+@types ? TS 사용을 위한 매우 큰 깃헙 레퍼지토리. 모든 유명한 npm 패키지를 다 가지고 있음.
+
+Type definition 이란, styled-component의 소스 코드를 보고 TS에게 해 줄 설명을 만들어 내는 것.
+
+TS에게 이게 뭔지 설명해주는 것이다!
+
+DefinitelyTyped에 우리도 공헌할 수 있음 ^ㅇ^/ 
+
