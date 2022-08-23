@@ -73,3 +73,120 @@ TS에게 이게 뭔지 설명해주는 것이다!
 
 DefinitelyTyped에 우리도 공헌할 수 있음 ^ㅇ^/ 
 
+
+[3.2 Typing the Props]
+
+How to type?
+component에게 type를 주는 것!
+
+TS에게 내 component가 가져야 하는 prop을 설명해 주고 싶다!?
+
+Prop Types는 브라우저 콘솔에다가 내용을 표시해준다. 코드가 실행한 '후'에 표시해주는 것이다.
+
+interface 안에다가는 TS에게 object shape를 설명해줄 것이다.
+
+interface CircleProps {
+    bgColor:string;
+
+}
+
+function Circle({ bgColor } : CircleProps) {
+    return <Container />;
+}
+요게 뜻하는 것 : bgColor의 타입은 CircleProps의 object이다 라고 말해주고 있는 것.
+
+따라서 CircleProps 안에느 bgColor가 있어야 하고, 이것은 string이어야 한다.
+
+*깨알같은 복습
+props를 그대로 불러오는 방법 
+props:bgColor또는 {bgColor}
+그 밑에있는 props의 값에도 props.bgColor라고 할지 그냥 bgColor라고 할지!!
+
+하지만 이렇게 했을 때, TS는 스타일 컴포넌트인 Container를 그냥 div로 인식하므로, interface를 하나 더 만들어서 스타일 컴포넌트에도 보내줄 필요가 있다.
+
+interface는 object type를 설명해 주는 것!
+
+interface로 prop타입을 한번 더 정해준 다음, 스타일 컴포넌트 요소 뒤에 <아까만든 인터페이스> 이렇게 넣어준다.
+
+
+interface ContainerProps {
+    bgColor: string;
+}
+
+const Container = styled.div<ContainerProps>``;
+
+어떻게 우리 자신과 props를 interface를 사용하여 보호하는지!를 이번 강의를 통해 배울 수 있었다.
+
+
+[3.3 Optional Props]
+이 props가 optional하냐, required하냐!
+
+props가 optional하다는 걸 보여주는 방법? ?를 붙여주면 된다!
+
+interface CircleProps {
+    bgColor:string;
+    borderColor? :string;
+}
+
+내가 Circle.tsx에 작성한 코드에서, 
+Circleprops에서는 borderColor가 옵셔널하지만, 그 밑에 있는 return값의 Container interface에서는 필수값이다.
+
+따라서 이 경우, 스타일 컴포넌트인 Container의 프롭스 값에 ?? 를 추가해 초기값을 넣어주어야 한다. 
+
+컴포넌트, 스타일 컴포넌트의 일치!
+
+- 우리는 Circle 컴포넌트의 props를 변경해주고, props를 하나 더 추가해줬다.
+- 이 props를 optional로 만들기 위해서는, interface에서 ?넣어주거나 undefined 넣어준다.
+
+- 하지만 스타일 컴포넌트에서는 이 props가 피룻이기 때문에, 디폴트 값을 넣어주어야 한다.
+
+
+
+*니꼬의 꿑팁
+TS는 아니지만, default 값을 argument에서 설정하는 방법
+
+function Circle({bgColor, borderColor, text = "Default Text"} : CircleProps) {
+    return <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+    {text}
+    </Container>;
+}
+
+argument에 = 해놓고 대놓고 값을 입력하면, 그게 default 값이 된다.
+
+
+[3.4 State]
+TS + React State
+
+*깨알 복습
+만약 component를 업데이트하고 싶다면, state를 바꿔야 한다.
+
+그리고 state를 바꾼다면, react.js가 상태를 업데이트 해줄 것이다.
+
+TS는 useState의 초기값을 가지고도 데이터 타입을 추측한다.
+
+초기값에 무엇이 들어있냐에 따라 데이터타입을 결정함. 예를들면, 초기값에 불리언이 들어있으면 불리언만 올 수 있다고 생각한다!
+
+    const [counter, setCounter] = useState(1);
+
+이 경우는 TS가 counter의 데이터타입을 넘버라고 생각함.
+
+  const [counter, setCounter] = useState<number|string>(1);
+    setCounter("Hello");
+
+이렇게 useState 뒤에 <데이터타입 | 데이터타입> 적어주면 이거랑 상관없이 다 accept한다.
+
+[3.5 Forms]
+리액트, 타입스크립트의 도움을 이용해 form 구현해보기
+
+- 우리는 TS에게 최대한 정확한 type를 알려주기 위해 노력해야 한다
+- 그냥 any를 사용하지 말 것.
+
+const onChange = (e: React.FormEvent) => {}
+이런식으로 이벤트의 타입을 정해줄 수 있다.
+예시의 FormEvent의 경우, onChange에 넣었을 때 이벤트 일으킬 수 있는 함수가 와야한다는 사실을 명시한다.
+
+현재 이 TS는 onChange함수가 InputElement에 의해 실행될 것을 알게 된다.
+
+TS는 target 대신 currentTarget을 택했음!
+
+onChange, onSubmit 모두 React.FormEvent라 할 수 있다.
