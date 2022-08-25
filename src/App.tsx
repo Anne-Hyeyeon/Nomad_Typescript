@@ -14,6 +14,14 @@ function App() {
     e.preventDefault();
     console.log("Hello", value);
   }
+
+  const Container = styled.div`
+    background-color: ${props => props.theme.bgColor};
+  `
+
+  const H1 = styled.h1`
+    color: ${props => props.theme.textColor};
+  `
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -25,6 +33,10 @@ function App() {
       {/* Circle 연습 */}
       <Circle borderColor="pink" bgColor="teal" />
       <Circle bgColor="tomato" text="Hello? Princess~" />
+
+      <Container>
+        <H1>안녕?</H1>
+      </Container>
     </div>
   )
 }

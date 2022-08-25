@@ -190,3 +190,98 @@ const onChange = (e: React.FormEvent) => {}
 TS는 target 대신 currentTarget을 택했음!
 
 onChange, onSubmit 모두 React.FormEvent라 할 수 있다.
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) = {}
+여기서 <>안에 들어가는 건 '누가 이 이벤트를 발생시켰어?'이다. 따라서 onSubmit이벤트를 발생시키는 건 Form이기 때문에 폼이벤트를 넣어주고, onChage는 HTML 인풋 엘리먼트이기 떄문에 그렇게 넣어주면 되지롱!
+
+JS에서의 이벤트 사용과 TS에서의 이벤트 사용 차이점 : 
+TS에서의 E는 어떤 타입인지, 뭐가 와야하는지 정확히 설명되어야 한다.
+
+[3.6 Themes]
+styled omponents테마와 TS 연결시켜보기.
+
+d.ts 는 declaration 파일이다.
+
+styled.d.ts 파일 만들기!
+
+import 'styled-components';
+
+// and extend them!
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    borderRadius: string;
+
+    colors: {
+      main: string;
+      secondary: string;
+    };
+  }
+}
+
+내 테마가 어떤지 정의해주자.
+
+1. styled.d.ts 를 만든다. (참고: d.ts 는 declaration file 이라는 뜻이다.)
+2. theme.ts (테마) 를 만든다.
+3. index.tsx 에 2에서 만든 테마를 주입한다.
+4. app.tsx 에서 props 로 받아 사용한다.
+
+
+[3.7 Recap]
+- TS : 자바스크립트는 코대 실행 전 타입에 대한 정의가 존재하지 않는다.
+하지만 TS는 코드를 쓰면 언어 자체에게 그 값들이 어떤 것들인지, 타입이 어떤 건지 말해주고 TS는 내가 실수를 교정할때까지 알려줄 것이다.
+- 뭐가 뭔지를 설명해줘야 하는 언어!
+- 초기 설정은 불편하지만, result는 아주 강력하다.
+
+- 함수의 인자 타입화 하는방법? 괄호로 정의해 주는것
+하지만 이 방법은 자주 쓰지 않고, 컴포넌트를 정해 주는 것.
+
+function Dummy({text}){
+    return <h1>{text}<h1>
+}
+여기서 text가 any 타입을 가진다면? 그건 별로 좋지 않고, 타입을 정해주어야 한다.
+
+어떻게? interface를 이용해서.
+
+interface를 이용해서 object의 타입을 정해 줘보자.
+
+interface DummyProps {
+    test:string;
+}
+
+function Dummy({text} : DummyProps){
+
+}
+이런식으로 사용해 준다.
+
+
+- 하지만, interface에 object가 추가되면 부모 컴포넌트에서 자식 컴포넌트로 값을 보낼 때 반드시 그 props를 가져야 하는 문제에 직면하게 된다.
+
+그렇다면 어떻게 이 props 값을 옵셔널하게 만들 것인가? interface 객체명 뒤에 ?를 붙이면 된다.
+
+- Default Prop value
+때떄로 빈 값일지도 모르는 prop을 보낼 때, default prop value가 필요하다.
+
+옵셔널 된건 된 건데, 진짜 값이 안 오면 어떻게 표시할 것인가? 
+prop 뒤에다가 = 해서 기본값을 표시해준다.
+
+function Dummy({text, active = false}: DummyProps){
+
+}
+
+- TS를 이용한 form
+
+onClick, onChange 이벤트에도 어떤 값이 들어올지를 정해주어야 한다.
+const onClick = (event:React.FormEvent(MouseEven 등 어떤 이벤트가 올 지를 특정지어준다.)<어떤 엘리먼트가 들어올건지. ex HTMLButtonElement>) => {
+
+};
+
+- synthetic event : 자바스크립트의 실제 event가 아닌, 리액트.js가 사용하는 event! (내가 가지고 있고, 내가 쓸 수 있는 이벤트들)
+Keyboard Events, Form Events...
+
+- 타입스크립트 선언 파일이 없는 js 패키지를 사용하는 방법? 
+유명한 라이브러리들의 경우, DefinitelyTyped라는 레포지토리 내에서 찾을 수 있다.
+
+따라서 타입스크립트 선언이 없는 라이브러리를 다운 받을 경우, 경고문이 들어올 것이다. 
+npm intall --save-dev @types/ 뒤에 라이브러리 이름을 해 보자. 될 수도 있다! 
+수많은 개발자들이 있다는 걸 명심 ㅎㅎ
+
+이론 공부 끝! 실전으로 들어가보자 :D

@@ -9,7 +9,7 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
     width: 200px;
     height: 200px;
-    background-color: ${props => props.bgColor};
+    background-color: ${props => props.theme.bgColor};
     border: 5px solid ${props => props.borderColor}
 `;
 
