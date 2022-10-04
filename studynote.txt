@@ -277,6 +277,22 @@ const onClick = (event:React.FormEvent(MouseEven 등 어떤 이벤트가 올 지
 - synthetic event : 자바스크립트의 실제 event가 아닌, 리액트.js가 사용하는 event! (내가 가지고 있고, 내가 쓸 수 있는 이벤트들)
 Keyboard Events, Form Events...
 
+SyntheticEvent (합성 이벤트)
+
+이벤트 핸들러는 모든 브라우저에서 이벤트를 동일하게 처리하기 위한 이벤트 래퍼 SyntheticEvent 객체를 전달받는다.
+
+Keyboard Events
+ex) onKeyDown onKeyPress onKeyUp
+
+Focus Events
+ex) onFocus onBlur
+
+Form Events
+ex) onChange onInput onInvalid onReset onSubmit
+
+Generic Events
+ex) onError onLoad
+
 - 타입스크립트 선언 파일이 없는 js 패키지를 사용하는 방법? 
 유명한 라이브러리들의 경우, DefinitelyTyped라는 레포지토리 내에서 찾을 수 있다.
 
