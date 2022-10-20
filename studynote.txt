@@ -153,6 +153,15 @@ function Circle({bgColor, borderColor, text = "Default Text"} : CircleProps) {
 
 argument에 = 해놓고 대놓고 값을 입력하면, 그게 default 값이 된다.
 
+*업무관련
+?? (Null 병합 연산자 (Nullish coalescing operator))
+
+??앞에 값이 null이거나 undefined이면 오른쪽 값을, 그렇지 않으면 왼쪽 값을 반환하는 논리연산자
+```
+null ?? "hello" // "hello"
+undefined ?? "hello" // "hello"
+"hi" ?? "hello" // "hi"
+```
 
 [3.4 State]
 TS + React State
